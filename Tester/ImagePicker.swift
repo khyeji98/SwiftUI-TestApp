@@ -48,6 +48,7 @@ class ImagePickerViewModel: ObservableObject {
     private func setImageItems() {
         DispatchQueue.main.async {
             self.imageItems = (self.cameraImages.compactMap({UIImage(data: $0)}) + self.galleryImages).enumerated().map({ ImageItem(index: $0.offset, uiImage: $0.element) })
+            print("imageItems: ", self.imageItems)
         }
     }
     
@@ -57,6 +58,11 @@ class ImagePickerViewModel: ObservableObject {
         } else {
             photosPickerItems.remove(at: index)
         }
+    }
+    
+    func makeDatas() -> [Data] {
+        print("imageItems: ", imageItems)
+        return imageItems.compactMap({ $0.uiImage.jpegData(compressionQuality: 1.0) })
     }
 }
 
@@ -81,7 +87,7 @@ struct ImagePickerView: View {
                         ForEach(viewModel.imageItems, id: \.self) { item in
                             Image(uiImage: item.uiImage)
                                 .resizable()
-                                .frame(width: UIScreen.main.bounds.width - ( 60 * 2), height: UIScreen.main.bounds.width - ( 60 * 2))
+                                .frame(width: UIScreen.main.bounds.width - (60 * 2), height: UIScreen.main.bounds.width - (60 * 2))
                                 .scaledToFill()
                                 .onTapGesture {
                                     viewModel.remove(at: item.index)
@@ -101,7 +107,7 @@ struct ImagePickerView: View {
                         ForEach(viewModel.imageItems, id: \.self) { item in
                             Image(uiImage: item.uiImage)
                                 .resizable()
-                                .frame(width: UIScreen.main.bounds.width - ( 60 * 2), height: UIScreen.main.bounds.width - ( 60 * 2))
+                                .frame(width: UIScreen.main.bounds.width - (60 * 2), height: UIScreen.main.bounds.width - (60 * 2))
                                 .scaledToFill()
                                 .onTapGesture {
                                     viewModel.remove(at: item.index)

@@ -13,14 +13,13 @@ struct LayoutBreakView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            Color.black.frame(height: 44)
+            Color.white.frame(height: 44)
             
-//            Color.orange.overlay {
-//                overlayView
-//            }
             Color.orange.overlayIfNeeds($isGreen) {
                 overlayView
             }
+            
+            Color.white.frame(height: 44)
         }
         .ignoresSafeArea()
         .onAppear {

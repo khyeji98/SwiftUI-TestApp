@@ -51,7 +51,7 @@ private enum Test: String, CaseIterable {
         case .lineGraph:
             LineGraph()
         case .imagePicker:
-            ImagePickerView()
+            CustomImagePickerView()
         case .layout:
             LayoutBreakView()
         }

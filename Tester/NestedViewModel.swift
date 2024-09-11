@@ -8,43 +8,67 @@
 import Combine
 import SwiftUI
 
+enum SubContent: Int {
+    case sub1, sub2, sub3
+}
+
 final class MainViewModel: ObservableObject {
-    var isPresentedSheet: Bool {
-        subViewModel.someValue
+    @Published private(set) var currentContent: SubContent = .sub1
+    var status: Bool {
+        switch currentContent {
+        case .sub1:
+            return subVM1.extraStatus
+        case .sub2:
+            return subVM2.extraStatus
+        case .sub3:
+            return subVM3.extraStatus
+        }
     }
-    let subViewModel: SubViewModel = SubViewModel()
+    var value: Int {
+        switch currentContent {
+        case .sub1:
+            return subVM1.value
+        case .sub2:
+            return subVM2.value
+        case .sub3:
+            return subVM3.value
+        }
+    }
+    let subVM1: SubViewModel = SubViewModel()
+    let subVM2: SubViewModel = SubViewModel()
+    let subVM3: SubViewModel = SubViewModel()
     
     private var cancellables: Set<AnyCancellable> = []
     
     init() {
-//        subViewModel.$isPresentedSheet.sink(receiveValue: togglePresentingSheet(_:)).store(in: &cancellables)
-//        subViewModel.publisher.sink(receiveValue: presentSheet).store(in: &cancellables)
-subViewModel.objectWillChange.sink(receiveValue: { 
-            print("바뀜 \(self.subViewModel.someValue)")
-        }).store(in: &cancellables)
+//        subVM1.publisher.sink(receiveValue: goToNextSubView).store(in: &cancellables)
+//        subVM2.publisher.sink(receiveValue: goToNextSubView).store(in: &cancellables)
+//        subVM1.$status.sink(receiveValue: { _ in self.goToNextSubView() }).store(in: &cancellables)
+//        subVM1.objectWillChange.sink(receiveValue: { self.objectWillChange.send() }).store(in: &cancellables)
+        Publishers.CombineLatest(subVM1.$status, subVM1.$value).sink(receiveValue: { _ in self.objectWillChange.send() }).store(in: &cancellables)
     }
     
-//    private func togglePresentingSheet(_ isPresented: Bool) {
-//        DispatchQueue.main.async {
-//            self.isPresentedSheet = isPresented
-//        }
-//    }
-//
-//    private func presentSheet() {
-//        DispatchQueue.main.async {
-//            self.isPresentedSheet = true
-//        }
-//    }
+    private func goToNextSubView() {
+        guard let nextSubCotnent = SubContent(rawValue: currentContent.rawValue + 1) else { return }
+        currentContent = nextSubCotnent
+    }
 }
 
 final class SubViewModel: ObservableObject {
-    @Published var isPresentedSheet: Bool = false
-    var someValue: Bool { isPresentedSheet }
+    @Published var status: Bool = false
+    @Published var value: Int = 0
+    private(set) var extraStatus: Bool = false
     
     let publisher: PassthroughSubject<Void, Never> = .init()
     
-    func presentSheet() {
-        isPresentedSheet = true
+    func toggleStatus() {
+        status.toggle()
+    }
+    
+    func toggleExtraStatus() {
+//        status.toggle()
+        value += 1
+        extraStatus.toggle()
     }
     
     func sendEvent() {
@@ -55,16 +79,26 @@ final class SubViewModel: ObservableObject {
 struct MainView: View {
     @StateObject private var viewModel: MainViewModel = MainViewModel()
     
+    init() {}
+    
     var body: some View {
         ZStack {
             Color.orange.ignoresSafeArea()
             
-            SubView(viewModel: viewModel.subViewModel)
+            switch viewModel.currentContent {
+            case .sub1:
+                SubView(viewModel: viewModel.subVM1, color: .black)
+            case .sub2:
+                SubView(viewModel: viewModel.subVM2, color: .blue)
+            case .sub3:
+                SubView(viewModel: viewModel.subVM3, color: .yellow)
+            }
             
             VStack {
-                Text("isPresentedSheet? \(viewModel.isPresentedSheet)")
-                    .foregroundStyle(.white)
-                
+                Spacer()
+                Text("current SubView's status? \(viewModel.status)").foregroundStyle(.white)
+                Text("current SubView's value? \(viewModel.value)").foregroundStyle(.white)
+                Spacer()
                 Spacer()
             }
         }
@@ -73,16 +107,30 @@ struct MainView: View {
     struct SubView: View {
         @StateObject private var viewModel: SubViewModel
         
-        init(viewModel: SubViewModel) {
+        private let color: Color
+        
+        init(viewModel: SubViewModel, color: Color) {
             self._viewModel = StateObject(wrappedValue: viewModel)
+            self.color = color
         }
         
         var body: some View {
             ZStack {
-                Color.black
+                color
                 
-                Button("Present Sheet!", action: viewModel.presentSheet)
+                VStack(spacing: 20) {
+                    Spacer()
+                    Spacer()
+                    Button("Toggle Status!", action: viewModel.toggleStatus)
+                    Button("Toggle Extra Status!", action: viewModel.toggleExtraStatus)
+                    Button("Next SubView!", action: viewModel.sendEvent)
+                    Spacer()
+                }
             }
         }
     }
+}
+
+#Preview {
+    MainView()
 }
