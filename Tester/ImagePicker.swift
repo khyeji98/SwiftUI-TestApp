@@ -67,8 +67,12 @@ class ImagePickerViewModel: ObservableObject {
 }
 
 struct ImagePickerView: View {
-    @StateObject private var viewModel: ImagePickerViewModel = ImagePickerViewModel()
+    @StateObject private var viewModel: ImagePickerViewModel
     @State private var isScrollView: Bool = false
+    
+    init(viewModel: ImagePickerViewModel) {
+        _viewModel = StateObject(wrappedValue: viewModel)
+    }
     
     var body: some View {
         VStack {
@@ -79,6 +83,10 @@ struct ImagePickerView: View {
             HStack {
                 Button("카메라로 사진 찍기", action: { viewModel.isPresentedCamera = true })
                 Button("갤러리에서 사진 추가", action: { viewModel.isPresentedGallery = true })
+//                Button("이미지 데이터 추출", action: {
+//                    let datas = viewModel.makeDatas()
+//                    print(datas)
+//                })
             }
             
             if isScrollView {

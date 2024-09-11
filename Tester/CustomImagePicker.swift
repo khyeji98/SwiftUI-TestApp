@@ -21,7 +21,7 @@ struct CustomImagePickerView: View {
                     print(data)
                 }
             
-            ImagePickerView()
+            ImagePickerView(viewModel: viewModel)
         }
     }
 }
