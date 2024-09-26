@@ -13,6 +13,7 @@
 		3359527B2C65FB9400862253 /* 금전소비대차계약서_양식_v0.docx in Resources */ = {isa = PBXBuildFile; fileRef = 3359527A2C65F42400862253 /* 금전소비대차계약서_양식_v0.docx */; };
 		3359527F2C69E0C800862253 /* NestedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3359527E2C69E0C800862253 /* NestedViewModel.swift */; };
 		3365F1862C7826B6002F6C22 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3365F1852C7826B6002F6C22 /* ImagePicker.swift */; };
+		337C94442CA28DFC00F6BBFF /* OptionalScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 337C94432CA28DE800F6BBFF /* OptionalScrollView.swift */; };
 		3389A2BF2C608FCD00E96DD7 /* StickyHeaderTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3389A2BE2C608FCD00E96DD7 /* StickyHeaderTabView.swift */; };
 		33AF76B02C2008DE00FF06DF /* TesterApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AF76AF2C2008DE00FF06DF /* TesterApp.swift */; };
 		33AF76B22C2008DE00FF06DF /* HighlightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AF76B12C2008DE00FF06DF /* HighlightView.swift */; };
@@ -50,6 +51,7 @@
 		3359527A2C65F42400862253 /* 금전소비대차계약서_양식_v0.docx */ = {isa = PBXFileReference; lastKnownFileType = file; path = "금전소비대차계약서_양식_v0.docx"; sourceTree = "<group>"; };
 		3359527E2C69E0C800862253 /* NestedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NestedViewModel.swift; sourceTree = "<group>"; };
 		3365F1852C7826B6002F6C22 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		337C94432CA28DE800F6BBFF /* OptionalScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionalScrollView.swift; sourceTree = "<group>"; };
 		3389A2BE2C608FCD00E96DD7 /* StickyHeaderTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickyHeaderTabView.swift; sourceTree = "<group>"; };
 		33AF76AC2C2008DE00FF06DF /* Tester.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tester.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		33AF76AF2C2008DE00FF06DF /* TesterApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TesterApp.swift; sourceTree = "<group>"; };
@@ -125,6 +127,7 @@
 				3365F1852C7826B6002F6C22 /* ImagePicker.swift */,
 				3329CAF62C85BC1300D3D70C /* CustomImagePicker.swift */,
 				3329CAF82C86AF3F00D3D70C /* LayoutBreakView.swift */,
+				337C94432CA28DE800F6BBFF /* OptionalScrollView.swift */,
 				33AF76B32C2008E000FF06DF /* Assets.xcassets */,
 				3359527A2C65F42400862253 /* 금전소비대차계약서_양식_v0.docx */,
 				33AF76B52C2008E000FF06DF /* Preview Content */,
@@ -292,6 +295,7 @@
 				33E5430B2C75E0AB0040258D /* LineGraph.swift in Sources */,
 				3359527F2C69E0C800862253 /* NestedViewModel.swift in Sources */,
 				33AF76B02C2008DE00FF06DF /* TesterApp.swift in Sources */,
+				337C94442CA28DFC00F6BBFF /* OptionalScrollView.swift in Sources */,
 				33B4E3522C50C093000B88E5 /* CustomDatePicker.swift in Sources */,
 				3365F1862C7826B6002F6C22 /* ImagePicker.swift in Sources */,
 				3389A2BF2C608FCD00E96DD7 /* StickyHeaderTabView.swift in Sources */,

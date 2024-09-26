@@ -15,13 +15,18 @@ struct LayoutBreakView: View {
         VStack(spacing: 0) {
             Color.white.frame(height: 44)
             
-            Color.orange.overlayIfNeeds($isGreen) {
+            ZStack {
+                Color.orange
+                Text("오버레이")
+            }
+            .overlayIfNeeds($isGreen) {
                 overlayView
             }
             
             Color.white.frame(height: 44)
         }
-        .ignoresSafeArea()
+        .frame(height: screenHeight)
+//        .ignoresSafeArea(.all, edges: .vertical)
         .onAppear {
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                 self.isGreen = false
@@ -30,7 +35,10 @@ struct LayoutBreakView: View {
     }
     
     private var overlayView: some View {
-        Color.green.opacity(0.2).ignoresSafeArea()
+        ZStack {
+            Color.green.opacity(0.5)
+            Text("오버레이")
+        }
     }
 }
 
@@ -58,7 +66,7 @@ struct OverlayIfNeedsModifier<OverlayView: View>: ViewModifier {
             content
             
             if isPresented {
-                overlayView.ignoresSafeArea()
+                overlayView.ignoresSafeArea(.all, edges: .vertical)
             }
         }
     }

@@ -11,7 +11,7 @@ final class CustomImagePickerViewModel: ImagePickerViewModel {
 }
 
 struct CustomImagePickerView: View {
-    @StateObject private var viewModel: CustomImagePickerViewModel = CustomImagePickerViewModel()
+    @StateObject private var viewModel: CustomImagePickerViewModel = CustomImagePickerViewModel(maxCount: 5)
     
     var body: some View {
         VStack {

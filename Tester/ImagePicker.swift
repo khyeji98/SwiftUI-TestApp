@@ -18,10 +18,10 @@ class ImagePickerViewModel: ObservableObject {
     @Published var isPresentedCamera: Bool = false
     
     @Published private(set) var imageItems: [ImageItem] = []
-    @Published var cameraImages: [Data] = [] {
+    var cameraImages: [Data] = [] {
         didSet { setImageItems() }
     }
-    @Published var photosPickerItems: [PhotosPickerItem] = [] {
+    var photosPickerItems: [PhotosPickerItem] = [] {
         didSet {
             Task {
                 await setGalleryImages()
@@ -30,6 +30,12 @@ class ImagePickerViewModel: ObservableObject {
         }
     }
     private var galleryImages: [UIImage] = []
+    var maxSelectableImageCount: Int { maxCount - cameraImages.count }
+    private let maxCount: Int
+    
+    init(maxCount: Int) {
+        self.maxCount = maxCount
+    }
     
     private func loadTransferable(_ photosPickerItem: PhotosPickerItem) async -> UIImage? {
         guard let data = try? await photosPickerItem.loadTransferable(type: Data.self), let uiImage = UIImage(data: data) else { return nil }
@@ -133,7 +139,7 @@ struct ImagePickerView: View {
         .photosPicker(
             isPresented: $viewModel.isPresentedGallery,
             selection: $viewModel.photosPickerItems,
-            maxSelectionCount: 10,
+            maxSelectionCount: viewModel.maxSelectableImageCount,
             matching: .images,
             preferredItemEncoding: .automatic
         )
